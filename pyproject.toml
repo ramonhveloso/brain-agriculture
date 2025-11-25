@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "brain-agriculture"
+version = "0.1.0"
+description = ""
+authors = ["ramonhveloso <ramonhveloso@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sqlalchemy = "^2.0.44"
+dotenv = "^0.9.9"
+fastapi = "^0.121.3"
+uvicorn = "^0.38.0"
+pytest = "^9.0.1"
+python-jose = "^3.5.0"
+email-validator = "^2.3.0"
+psycopg2 = "^2.9.11"
+python-multipart = "^0.0.20"
+structlog = "^25.5.0"
+python-json-logger = "^4.0.0"
+bcrypt = "3.2.0"
+passlib = "^1.7.4"
+alembic = "^1.17.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.5.0"
+autoflake = "^2.3.1"
+isort = "^7.0.0"
+black = "^25.11.0"
+mypy = "^1.18.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
