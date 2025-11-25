@@ -25,7 +25,7 @@ restart:
 	$(DOCKER_COMPOSE) up -d
 
 shell:
-	docker exec -it brain-agriculture-backend bash
+	docker exec -it brain_agriculture-backend bash
 
 run-fastapi:
 	uvicorn app.main:app --reload --host 0.0.0.0 --port 8007

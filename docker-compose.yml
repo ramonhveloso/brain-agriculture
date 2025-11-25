@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: brain-agriculture-back-end
+    container_name: brain_agriculture-back-end
     restart: always
     env_file: 
       - .env
