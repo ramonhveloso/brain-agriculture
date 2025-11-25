@@ -1,5 +1,12 @@
 import os
 
+os.environ.setdefault("SECRET_KEY", "test-secret")
+os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
+os.environ.setdefault("SMTP_SERVER", "localhost")
+os.environ.setdefault("SMTP_PORT", "1025")
+os.environ.setdefault("SMTP_USERNAME", "user")
+os.environ.setdefault("SMTP_PASSWORD", "pass")
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -9,14 +16,27 @@ from app.database.base import Base
 from app.main import app
 from app.middleware.dependencies import get_db
 
-DATABASE_URL = os.getenv("TEST_DATABASE_URL")
-if DATABASE_URL is None:
-    raise ValueError("TEST_DATABASE_URL não está configurado")
 
-engine = create_engine(DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-Base.metadata.create_all(bind=engine)
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
+)
+
+TestingSessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_database():
+    Base.metadata.create_all(bind=engine)
+    yield
+    Base.metadata.drop_all(bind=engine)
+
 
 @pytest.fixture(scope="function")
 def db_session():
@@ -30,15 +50,15 @@ def db_session():
     transaction.rollback()
     connection.close()
 
+
 @pytest.fixture(scope="function")
-def use_test_client(db_session):
+def client(db_session):
     def override_get_db():
-        try:
-            yield db_session
-        finally:
-            db_session.close()
+        yield db_session
 
     app.dependency_overrides[get_db] = override_get_db
-    client = TestClient(app)
-    yield client
+
+    test_client = TestClient(app)
+    yield test_client
+
     app.dependency_overrides.clear()

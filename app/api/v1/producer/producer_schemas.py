@@ -1,7 +1,7 @@
 import re
 from typing import List, Optional
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 def validate_cpf_cnpj(value: str) -> str:
@@ -56,8 +56,7 @@ class CreateProducerRequest(BaseModel):
     def validate_document(cls, v):
         return validate_cpf_cnpj(v)
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Producer(BaseModel):
@@ -65,9 +64,8 @@ class Producer(BaseModel):
     cpf_cnpj: str
     nome_produtor: str
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class CreateProducerResponse(Producer):
     pass
@@ -80,9 +78,8 @@ class GetProducerResponse(Producer):
 class GetProducersResponse(BaseModel):
     producers: List[Producer]
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class UpdateProducerRequest(BaseModel):
     cpf_cnpj: Optional[str] = None
@@ -94,9 +91,8 @@ class UpdateProducerRequest(BaseModel):
             return v
         return validate_cpf_cnpj(v)
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class UpdateProducerResponse(Producer):
     pass

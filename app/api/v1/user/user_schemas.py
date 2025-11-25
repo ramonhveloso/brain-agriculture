@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class GetUsersMeResponse(BaseModel):
@@ -8,9 +8,8 @@ class GetUsersMeResponse(BaseModel):
     email: EmailStr
     name: str
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):
@@ -22,8 +21,7 @@ class PutUsersMeRequest(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -37,9 +35,8 @@ class PutUsersMeResponse(BaseModel):
     email: EmailStr
     name: str
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):
@@ -53,9 +50,8 @@ class User(BaseModel):
     name: str
     is_active: bool
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):
@@ -66,9 +62,8 @@ class User(BaseModel):
 class GetUsersResponse(BaseModel):
     users: List[User]
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):
@@ -81,9 +76,8 @@ class GetUserResponse(BaseModel):
     email: EmailStr
     name: str
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):
@@ -95,9 +89,8 @@ class PutUserRequest(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):
@@ -110,8 +103,7 @@ class PutUserResponse(BaseModel):
     email: EmailStr
     name: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -125,9 +117,8 @@ class DeleteUserResponse(BaseModel):
     email: EmailStr
     name: str
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
     @classmethod
     def model_validate(cls, data):
         if isinstance(data, cls):

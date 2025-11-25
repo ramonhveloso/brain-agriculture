@@ -1,14 +1,14 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class CreatePlantedCultureRequest(BaseModel):
     propriedade_safra_id: int
     cultura_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class CreatePlantedCultureResponse(BaseModel):
@@ -16,8 +16,8 @@ class CreatePlantedCultureResponse(BaseModel):
     propriedade_safra_id: int
     cultura_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class PlantedCulture(BaseModel):
@@ -25,15 +25,15 @@ class PlantedCulture(BaseModel):
     propriedade_safra_id: int
     cultura_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class GetPlantedCulturesResponse(BaseModel):
     planted_cultures: List[PlantedCulture]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class GetPlantedCultureResponse(BaseModel):
@@ -41,16 +41,16 @@ class GetPlantedCultureResponse(BaseModel):
     propriedade_safra_id: int
     cultura_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class UpdatePlantedCultureRequest(BaseModel):
     propriedade_safra_id: Optional[int] = None
     cultura_id: Optional[int] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class UpdatePlantedCultureResponse(BaseModel):
@@ -58,8 +58,8 @@ class UpdatePlantedCultureResponse(BaseModel):
     propriedade_safra_id: int
     cultura_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        
 
 
 class DeletePlantedCultureResponse(BaseModel):
@@ -67,5 +67,5 @@ class DeletePlantedCultureResponse(BaseModel):
     propriedade_safra_id: int
     cultura_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+        

@@ -15,8 +15,6 @@ app = FastAPI(
     version="0.1.0",
 )
 
-Base.metadata.create_all(bind=engine)
-
 app.include_router(api_router, prefix="/api/v1")
 app.middleware("http")(logging_middleware)
 app.add_middleware(

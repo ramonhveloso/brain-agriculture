@@ -1,13 +1,12 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class Response(BaseModel):
     message: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -24,8 +23,7 @@ class PostSignUpRequest(BaseModel):
     cpf: Optional[str] = None
     cnpj: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -41,8 +39,7 @@ class PostSignUpResponse(BaseModel):
     cpf: Optional[str] = None
     cnpj: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -55,8 +52,7 @@ class PostLoginRequest(BaseModel):
     email: EmailStr
     password: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -69,8 +65,7 @@ class PostLoginResponse(BaseModel):
     access_token: str
     token_type: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -86,8 +81,7 @@ class PostLogoutResponse(Response):
 class PostForgotPasswordRequest(BaseModel):
     email: EmailStr
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -105,8 +99,7 @@ class PostResetPasswordRequest(BaseModel):
     pin: str
     new_password: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -123,8 +116,7 @@ class PutChangePasswordRequest(BaseModel):
     old_password: str
     new_password: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -140,8 +132,7 @@ class PutChangePasswordResponse(Response):
 class GetMeRequest(BaseModel):
     token: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):
@@ -157,8 +148,7 @@ class GetAuthMeResponse(BaseModel):
     cpf: Optional[str] = None
     cnpj: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
     @classmethod
     def model_validate(cls, data):

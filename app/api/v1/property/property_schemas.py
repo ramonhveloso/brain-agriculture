@@ -1,7 +1,7 @@
 from decimal import Decimal
 from typing import List, Optional
 
-from pydantic import BaseModel, ValidationInfo, field_validator
+from pydantic import BaseModel, ConfigDict, ValidationInfo, field_validator
 
 VALID_STATES = {
     "AC",
@@ -73,9 +73,8 @@ class PostPropertyRequest(BaseModel):
                 )
         return v
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class Property(BaseModel):
     id: int
@@ -87,9 +86,8 @@ class Property(BaseModel):
     area_agricultavel: Decimal
     area_vegetacao: Decimal
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class PostPropertyResponse(Property):
     pass
@@ -102,9 +100,8 @@ class GetPropertyResponse(Property):
 class GetPropertiesResponse(BaseModel):
     properties: List[Property]
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class PutPropertyRequest(BaseModel):
     nome_fazenda: Optional[str] = None
@@ -120,9 +117,8 @@ class PutPropertyRequest(BaseModel):
             raise ValueError("Invalid state (UF)")
         return v.upper() if v else v
 
-    class Config:
-        from_attributes = True
-
+    model_config = ConfigDict(from_attributes=True)
+        
 
 class PutPropertyResponse(Property):
     pass
