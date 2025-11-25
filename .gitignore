@@ -1,0 +1,96 @@
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimized / DLL files
+*.so
+
+# =========================
+# POETRY
+# =========================
+# (Poetry nunca precisa ignorar lock, então mantemos)
+# pyproject.toml deve ficar versionado
+# poetry.lock também fica versionado
+
+# =========================
+# FASTAPI / UVICORN
+# =========================
+# Cache de schemas do OpenAPI
+openapi.json
+
+# =========================
+# ALEMBIC
+# =========================
+alembic/__pycache__/
+alembic/versions/__pycache__/
+alembic/versions/*.pyc
+
+# Se desejar ignorar versões geradas automaticamente:
+# alembic/versions/*.py
+
+# =========================
+# TESTS / COVERAGE
+# =========================
+htmlcov/
+.coverage
+.coverage.*
+.cache/
+pytest_cache/
+
+# =========================
+# LOGS
+# =========================
+*.log
+logs/
+log/
+*.out
+
+# =========================
+# DOCKER
+# =========================
+docker-data/
+postgres_data/
+*.pid
+
+# =========================
+# ENVIRONMENT VARIABLES
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# IDE / EDITOR FILES
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# MISC
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# PRE-COMMIT
+# =========================
+.pre-commit-config.yaml~
+.pre-commit/
+.pre-commit-cache/
