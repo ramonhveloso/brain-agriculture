@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: brain_agriculture-back-end
+    container_name: brain-agriculture-back-end
     restart: always
     env_file: 
       - .env
@@ -14,7 +14,7 @@ services:
 
   db:
     image: postgres:14.10
-    container_name: brain-database
+    container_name: database-brain
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: postgre
