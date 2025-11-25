@@ -1,11 +1,11 @@
 import os
 
-os.environ.setdefault("SECRET_KEY", "test-secret")
-os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
-os.environ.setdefault("SMTP_SERVER", "localhost")
-os.environ.setdefault("SMTP_PORT", "1025")
-os.environ.setdefault("SMTP_USERNAME", "user")
-os.environ.setdefault("SMTP_PASSWORD", "pass")
+os.environ["SECRET_KEY"] = "test-secret"
+os.environ["DATABASE_URL"] = "sqlite:///./test.db"
+os.environ["SMTP_SERVER"] = "localhost"
+os.environ["SMTP_PORT"] = "1025"
+os.environ["SMTP_USERNAME"] = "user"
+os.environ["SMTP_PASSWORD"] = "pass"
 
 import pytest
 from fastapi.testclient import TestClient
@@ -15,7 +15,6 @@ from sqlalchemy.orm import sessionmaker
 from app.database.base import Base
 from app.main import app
 from app.middleware.dependencies import get_db
-
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -29,7 +28,6 @@ TestingSessionLocal = sessionmaker(
     autoflush=False,
     bind=engine,
 )
-
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_database():
