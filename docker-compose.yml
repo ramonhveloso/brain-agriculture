@@ -1,0 +1,28 @@
+services:
+  back-end:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: brain-agriculture-back-end
+    restart: always
+    env_file: 
+      - .env
+    depends_on:
+      - db
+    ports:
+      - "8007:8007"
+
+  db:
+    image: postgres:14.10
+    container_name: brain-database
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: postgre
+      POSTGRES_DB: brain_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
