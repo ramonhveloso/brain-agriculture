@@ -5,11 +5,10 @@ from email.mime.text import MIMEText
 
 from fastapi import HTTPException
 
-# Configurações do servidor de e-mail
-SMTP_SERVER = os.getenv("SMTP_SERVER")  # Endereço do servidor SMTP
-SMTP_PORT = int(os.getenv("SMTP_PORT", 465))  # Porta do servidor SMTP
-SMTP_USERNAME = os.getenv("SMTP_USERNAME")  # Nome de usuário do e-mail
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")  # Senha do e-mail
+SMTP_SERVER = os.getenv("SMTP_SERVER")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 465))
+SMTP_USERNAME = os.getenv("SMTP_USERNAME")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
 if not all([SMTP_SERVER, SMTP_USERNAME, SMTP_PASSWORD]):
     raise ValueError(
@@ -19,14 +18,11 @@ if not all([SMTP_SERVER, SMTP_USERNAME, SMTP_PASSWORD]):
 
 async def send_pin_email(to_email: str, pin: str):
     """Envia um e-mail com o PIN de recuperação de senha."""
-
-    # Cria o objeto da mensagem
     msg = MIMEMultipart()
     msg["From"] = str(SMTP_USERNAME)
     msg["To"] = to_email
     msg["Subject"] = "Seu código de recuperação de senha"
 
-    # Template moderno em HTML para o e-mail
     body = f"""
     <html>
         <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px;">
@@ -61,7 +57,6 @@ async def send_pin_email(to_email: str, pin: str):
     msg.attach(MIMEText(body, "html"))
 
     try:
-        # Conecta ao servidor SMTP e envia o e-mail
         with smtplib.SMTP_SSL(str(SMTP_SERVER), SMTP_PORT) as server:
             server.login(str(SMTP_USERNAME), str(SMTP_PASSWORD))
             server.send_message(msg, to_addrs=to_email)

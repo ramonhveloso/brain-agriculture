@@ -32,12 +32,10 @@ class PlantedCultureService:
     async def create(
         self, db: Session, data: CreatePlantedCultureRequest
     ) -> CreatePlantedCultureResponse:
-        # Check if cultura exists
         cultura = db.query(Culture).filter(Culture.id == data.cultura_id).first()
         if not cultura:
             raise HTTPException(status_code=404, detail="Culture not found")
 
-        # Check if propriedade_safra exists
         propriedade_safra = (
             db.query(PropertySeason)
             .filter(PropertySeason.id == data.propriedade_safra_id)
@@ -46,7 +44,6 @@ class PlantedCultureService:
         if not propriedade_safra:
             raise HTTPException(status_code=404, detail="Property-Season not found")
 
-        # Check if already exists (unique constraint)
         existing = await self.repository.get_by_unique(
             db, data.propriedade_safra_id, data.cultura_id
         )
