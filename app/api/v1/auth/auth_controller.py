@@ -22,15 +22,14 @@ from app.middleware.dependencies import AuthUser, get_db, jwt_middleware
 
 router = APIRouter()
 auth_service = AuthService(AuthRepository())
-
+logger = get_logger("Auth")
 
 @router.post("/signup", status_code=status.HTTP_201_CREATED)
 async def post_signup(
     data: PostSignUpRequest, db: AsyncSession = Depends(get_db)
 ) -> PostSignUpResponse:
-    logger = get_logger("Auth")
-    logger.info("signup_called", email=data.email)
-    response_service = await auth_service.create_user(db=db, data=data)
+    logger.info("signup_called", route='/signup', email=data.email)
+    response_service = await auth_service.create_user(db=db, data=data, logger=logger)
     return PostSignUpResponse.model_validate(response_service)
 
 

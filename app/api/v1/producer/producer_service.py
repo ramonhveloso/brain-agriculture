@@ -1,5 +1,6 @@
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
+from structlog import BoundLogger
 
 from app.api.v1.producer.producer_repository import ProducerRepository
 from app.api.v1.producer.producer_schemas import (CreateProducerRequest,
@@ -16,9 +17,10 @@ class ProducerService:
     def __init__(self, repository: ProducerRepository = Depends()):
         self.repository = repository
 
-    async def get_all(self, db: Session) -> GetProducersResponse:
+    async def get_all(self, db: Session, logger: BoundLogger) -> GetProducersResponse:
         producers = await self.repository.get_all(db)
         items = [Producer.model_validate(p) for p in producers]
+        logger.info("get_all_producers_success", total=len(items))
         return GetProducersResponse(producers=items)
 
     async def get_by_id(self, db: Session, producer_id: int) -> GetProducerResponse:

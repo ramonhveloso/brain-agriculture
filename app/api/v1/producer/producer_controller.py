@@ -12,18 +12,20 @@ from app.api.v1.producer.producer_schemas import (CreateProducerRequest,
                                                   UpdateProducerRequest,
                                                   UpdateProducerResponse)
 from app.api.v1.producer.producer_service import ProducerService
+from app.core.log import get_logger
 from app.middleware.dependencies import AuthUser, get_db, jwt_middleware
 
 router = APIRouter()
 service = ProducerService(ProducerRepository())
-
+logger = get_logger("Producer")
 
 @router.get("/")
 async def get_producers(
     authuser: Annotated[AuthUser, Security(jwt_middleware)],
     db: Session = Depends(get_db),
 ) -> GetProducersResponse:
-    response = await service.get_all(db)
+    logger.info("get_producers_called", route='/producers', user_id=authuser.id)
+    response = await service.get_all(db=db, logger=logger)
     return GetProducersResponse.model_validate(response)
 
 

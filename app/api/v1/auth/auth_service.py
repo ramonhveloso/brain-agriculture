@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
+from structlog import BoundLogger
 
 from app.api.v1.auth.auth_repository import AuthRepository
 from app.api.v1.auth.auth_schemas import (GetAuthMeResponse,
@@ -27,14 +28,14 @@ class AuthService:
         self.auth_repository = auth_repository
 
     async def create_user(
-        self, db: AsyncSession, data: PostSignUpRequest
+        self, db: AsyncSession, data: PostSignUpRequest, logger: BoundLogger
     ) -> PostSignUpResponse:
         hashed_password = get_password_hash(password=data.password)
         data.password = hashed_password
-        response_repository = await self.auth_repository.create_user(db, data)
         try:
-            pass
-        except:
+            response_repository = await self.auth_repository.create_user(db, data)
+        except Exception as e:
+            logger.error("create_user_failed", email=data.email, error=str(e))
             raise HTTPException(status_code=409, detail=f"Conflict")
 
         return PostSignUpResponse(

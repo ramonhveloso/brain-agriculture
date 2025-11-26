@@ -29,12 +29,14 @@ def setup_logging():
                     "formatter": "plain",
                 },
                 "file": {
-                    "class": "logging.handlers.RotatingFileHandler",
+                    "class": "logging.handlers.TimedRotatingFileHandler",
                     "filename": LOG_FILE_PATH,
-                    "maxBytes": 5 * 1024 * 1024,
-                    "backupCount": 5,
+                    "when": "midnight",
+                    "interval": 1,
+                    "backupCount": 30,
                     "encoding": "utf8",
                     "formatter": "structured_json",
+                    "utc": False,
                 },
             },
             "root": {
